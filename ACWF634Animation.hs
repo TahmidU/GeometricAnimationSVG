@@ -15,9 +15,6 @@ background = translate (always (0,0))
  (withPaint (always black) (rect (always 800) (always 600)))
 
 --Shape
-hexagon :: Animation
-hexagon = (withPaint (always white) (polygon [(0,50),(43.3,25),(43.3,-25),(0,-50),(-43.3,-25),(-43.3,25)]))
-
 cCircle :: Animation
 cCircle = (withBorder (always white) (always 2) (withoutPaint (circle (always 20))))
 
