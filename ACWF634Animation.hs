@@ -6,9 +6,6 @@ import Animation
 width = 800
 height = 600
 
-centerW = 400
-centerH = 300
-
 --Black background
 background :: Animation
 background = translate (always (0,0))
@@ -18,9 +15,13 @@ background = translate (always (0,0))
 cCircle :: Animation
 cCircle = (withBorder (always white) (always 2) (withoutPaint (circle (always 20))))
 
+--Pattern: 20*15
+pattern :: [Animation]
+pattern = [(translate (always (40*i,40*j)) cCircle) | i <- [0..20], j <- [0..15]]
+
 --Main picture
 picture :: Animation
-picture = background
+picture = background `plus` (combine pattern)
 
 --Test animation individually
 singleAnimation :: String -> Animation -> IO()
