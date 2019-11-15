@@ -1,4 +1,4 @@
-module ACWF634Animation where
+module Coursework where
 
 import Animation
 import Data.List
@@ -32,29 +32,34 @@ background = translate (always (0,0))
  (withPaint (always black) (rect (always 800) (always 600)))
 
 --Shape
-cCircle :: (Double,Double) -> Animation
-cCircle (x,y) = (translate (always (x,y)) 
- (scale (repeatSmooth (1,1) [(1,(1,1)),(2,(2,2)),(3,(1,1))]) (withBorder (always white) (always 2) (withoutPaint (circle (always 20))))))
+cCircle :: (Double,Double) -> Int -> Animation
+cCircle (x,y) i = (translate (always (x,y)) 
+ (scale (repeatSmooth (1,1) [(fromIntegral (i::Int) + 1,(1,1)),(fromIntegral (i::Int) + 2,(2,2)),( fromIntegral (i::Int) + 3,(1,1))]) (withBorder (always white) (always 2) (withoutPaint (circle (always 20))))))
 
 --Pattern: 20*15
-patternCoord :: [(Double,Double)]
-patternCoord = [ (i*40,j*40) | i <- [0..20], j <- [0..15]]
+produceCoords :: [(Double,Double)]
+produceCoords = [ (i*40,j*40) | i <- [0..20], j <- [0..15]]
 
 --Sort Patterns closest to the center.
-sortCoord :: [(Double,Double)] -> [(Double, Double)]
-sortCoord xs = [ (x,y) |  (x,y) <- (sortOn (sortHelper (400,300)) xs)]
+sortCoords :: [(Double,Double)] -> [(Double, Double)]
+sortCoords xs = [ (x,y) |  (x,y) <- (sortOn (sortHelper (400,300)) xs)]
+
+sortDistance :: [(Double,Double)] -> [Double]
+sortDistance xs = [pyDistance (400,300) (x,y) | (x,y) <- (sortOn(sortHelper (400,300)) xs)]
+
+groupCoords :: [Int]
+groupCoords = fmap length (group (sortDistance produceCoords))
 
 animatePattern :: [(Double,Double)] -> [Animation]
-animatePattern xs = [cCircle (x,y) | (x,y) <- xs]
+animatePattern xs = [(cCircle (x,y) i) | (x,y) <- xs, i <- [0..336]]
 
 --Main picture
 picture :: Animation
-picture = background `plus` (combine (animatePattern (sortCoord patternCoord)))
+picture = background `plus` (combine (animatePattern (sortCoords produceCoords)))
 
 --Experimental Picture
---pic :: Animation
---pic = background `plus` (scale (repeatSmooth (1,1) [(1,(1,1)),(2,(2,2)),(3,(1,1))]) (translate (always (360,300)) cCircle))
- --`plus` (scale (repeatSmooth (1,1) [(1,(1,1)),(2,(2,2)),(3,(1,1))]) (translate (always (400,300)) cCircle))
+pic :: Animation
+pic = background 
 
 --Helper/Debugger Functions
 ------------------------------------------------------------------------------------
@@ -67,6 +72,9 @@ coordPrinter xs = [(x,y) | (x,y) <- xs]
 
 mark :: Animation
 mark = (translate (always (400,300)) (withPaint (always red) (circle (always 20))))
+
+dummy :: [(Double,Double)] -> [Int] -> [Int]
+dummy xs ys = [y | x <- xs, y <- ys]
 
 --Outputs
 ------------------------------------------------------------------------------------
