@@ -1,4 +1,4 @@
-module Coursework where
+module MyAnimation where
 
 import Animation
 import Data.List
