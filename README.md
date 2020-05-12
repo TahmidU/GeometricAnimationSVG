@@ -2,6 +2,8 @@
 
 Coursework Task: Required to produce a Scalable Vector Graphics (SVG) animation using a custom Animation Library made by our Professor.
 
+![](geometric_pattern.gif)
+
 ## Installation
 
 GHC Haskell Compiler required (Minimal Installers):
