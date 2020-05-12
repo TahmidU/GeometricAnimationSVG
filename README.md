@@ -19,6 +19,8 @@ Open the terminal in the project root directory and run:
 ghci MyAnimation.hs
 outFile
 ```
+## Credit
+Animation Library: Ross Paterson, Lecturer and Professor in City, University of London.
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+My Code is under the [MIT](https://choosealicense.com/licenses/mit/) license.
